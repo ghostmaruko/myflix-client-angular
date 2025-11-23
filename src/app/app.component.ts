@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   template: `
-    <h1>Test MyFlix API</h1>
+    <h1>MyFlix Movies</h1>
     <div class="grid">
       <div class="card" *ngFor="let movie of movies">
         <img [src]="movie.imageURL" [alt]="movie.title" />
@@ -13,6 +13,13 @@ import { CommonModule } from '@angular/common';
           <h3>{{ movie.title }}</h3>
           <p>{{ movie.year }} | {{ movie.genre.name }}</p>
           <p>Director: {{ movie.director.name }}</p>
+          <button (click)="toggleFavorite(movie._id)">
+            {{
+              isFavorite(movie._id)
+                ? 'Remove from Favorites'
+                : 'Add to Favorites'
+            }}
+          </button>
         </div>
       </div>
     </div>
@@ -59,15 +66,34 @@ import { CommonModule } from '@angular/common';
         font-size: 0.9rem;
         color: #555;
       }
+      .card-body button {
+        margin-top: 5px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        font-size: 0.9rem;
+      }
+      .card-body button:hover {
+        background-color: #0056b3;
+      }
     `,
   ],
 })
 export class AppComponent implements OnInit {
   movies: any[] = [];
+  favoriteMovies: string[] = [];
 
   constructor(private fetchApiData: FetchApiDataService) {}
 
   ngOnInit(): void {
+    // Simula login (metti qui il tuo username e token valido ottenuto dal backend)
+    localStorage.setItem('username', 'yourUsername');
+    localStorage.setItem('token', 'yourJWTtoken');
+
+    // Carica tutti i film
     this.fetchApiData.getAllMovies().subscribe({
       next: (resp) => {
         console.log('Movies:', resp);
@@ -75,5 +101,42 @@ export class AppComponent implements OnInit {
       },
       error: (err) => console.error('Error fetching movies:', err),
     });
+
+    // Carica i film preferiti dell'utente
+    this.fetchApiData.getFavoriteMovies().subscribe({
+      next: (resp) => {
+        this.favoriteMovies = resp.favoriteMovies || [];
+        console.log('Favorite movies:', this.favoriteMovies);
+      },
+      error: (err) => console.error('Error fetching favorites:', err),
+    });
+  }
+
+  // Controlla se un film è tra i preferiti
+  isFavorite(movieId: string): boolean {
+    return this.favoriteMovies.includes(movieId);
+  }
+
+  // Aggiunge o rimuove dai preferiti
+  toggleFavorite(movieId: string) {
+    if (this.isFavorite(movieId)) {
+      this.fetchApiData.deleteFavoriteMovie(movieId).subscribe({
+        next: () => {
+          this.favoriteMovies = this.favoriteMovies.filter(
+            (id) => id !== movieId
+          );
+          console.log('Removed from favorites:', movieId);
+        },
+        error: (err) => console.error('Error removing favorite:', err),
+      });
+    } else {
+      this.fetchApiData.addFavoriteMovie(movieId).subscribe({
+        next: () => {
+          this.favoriteMovies.push(movieId);
+          console.log('Added to favorites:', movieId);
+        },
+        error: (err) => console.error('Error adding favorite:', err),
+      });
+    }
   }
 }
