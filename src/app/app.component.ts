@@ -15,25 +15,28 @@ import { UserLoginDialogComponent } from './user-login-dialog/user-login-dialog.
   template: `
     <h1>MyFlix Movies</h1>
 
-    <button (click)="openUserRegistrationDialog()" class="register-btn">
-      Register
-    </button>
-    <button (click)="openUserLoginDialog()" class="login-btn">Login</button>
+    <!-- Login/Register Buttons -->
+    <div *ngIf="!isLoggedIn">
+      <button (click)="openUserRegistrationDialog()" class="register-btn">Register</button>
+      <button (click)="openUserLoginDialog()" class="login-btn">Login</button>
+    </div>
 
-    <div class="grid">
-      <div class="card" *ngFor="let movie of movies">
-        <img [src]="movie.imageURL" [alt]="movie.title" />
-        <div class="card-body">
-          <h3>{{ movie.title }}</h3>
-          <p>{{ movie.year }} | {{ movie.genre.name }}</p>
-          <p>Director: {{ movie.director.name }}</p>
-          <button (click)="toggleFavorite(movie._id)">
-            {{
-              isFavorite(movie._id)
-                ? 'Remove from Favorites'
-                : 'Add to Favorites'
-            }}
-          </button>
+    <!-- Logged-in view -->
+    <div *ngIf="isLoggedIn">
+      <p class="welcome-msg">Welcome, {{ username }}!</p>
+      <button (click)="logout()" class="logout-btn">Logout</button>
+
+      <div class="grid">
+        <div class="card" *ngFor="let movie of movies">
+          <img [src]="movie.imageURL" [alt]="movie.title" />
+          <div class="card-body">
+            <h3>{{ movie.title }}</h3>
+            <p>{{ movie.year }} | {{ movie.genre.name }}</p>
+            <p>Director: {{ movie.director.name }}</p>
+            <button (click)="toggleFavorite(movie._id)">
+              {{ isFavorite(movie._id) ? 'Remove from Favorites' : 'Add to Favorites' }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -141,34 +144,62 @@ import { UserLoginDialogComponent } from './user-login-dialog/user-login-dialog.
       .login-btn:hover {
         background-color: #0056b3;
       }
+
+      .welcome-msg {
+        text-align: center;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+
+      .logout-btn {
+        display: block;
+        margin: 0 auto 20px auto;
+        padding: 10px 20px;
+        font-size: 1rem;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .logout-btn:hover {
+        background-color: #a71d2a;
+      }
     `,
   ],
 })
 export class AppComponent implements OnInit {
   movies: any[] = [];
   favoriteMovies: string[] = [];
+  isLoggedIn = false;
+  username: string | null = null;
 
-  constructor(
-    private fetchApiData: FetchApiDataService,
-    private dialog: MatDialog
-  ) {}
+  constructor(private fetchApiData: FetchApiDataService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    // Carica tutti i film
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('username');
+
+    this.isLoggedIn = !!token;
+    this.username = user;
+
+    if (this.isLoggedIn) {
+      this.loadMovies();
+      this.loadFavorites();
+    }
+  }
+
+  loadMovies(): void {
     this.fetchApiData.getAllMovies().subscribe({
-      next: (resp) => {
-        console.log('Movies:', resp);
-        this.movies = resp;
-      },
+      next: (resp) => (this.movies = resp),
       error: (err) => console.error('Error fetching movies:', err),
     });
+  }
 
-    // Carica i film preferiti dell'utente
+  loadFavorites(): void {
     this.fetchApiData.getFavoriteMovies().subscribe({
-      next: (resp) => {
-        this.favoriteMovies = resp.favoriteMovies || [];
-        console.log('Favorite movies:', this.favoriteMovies);
-      },
+      next: (resp) => (this.favoriteMovies = resp.favoriteMovies || []),
       error: (err) => console.error('Error fetching favorites:', err),
     });
   }
@@ -177,37 +208,46 @@ export class AppComponent implements OnInit {
     return this.favoriteMovies.includes(movieId);
   }
 
-  toggleFavorite(movieId: string) {
+  toggleFavorite(movieId: string): void {
     if (this.isFavorite(movieId)) {
       this.fetchApiData.deleteFavoriteMovie(movieId).subscribe({
-        next: () => {
-          this.favoriteMovies = this.favoriteMovies.filter(
-            (id) => id !== movieId
-          );
-          console.log('Removed from favorites:', movieId);
-        },
+        next: () =>
+          (this.favoriteMovies = this.favoriteMovies.filter((id) => id !== movieId)),
         error: (err) => console.error('Error removing favorite:', err),
       });
     } else {
       this.fetchApiData.addFavoriteMovie(movieId).subscribe({
-        next: () => {
-          this.favoriteMovies.push(movieId);
-          console.log('Added to favorites:', movieId);
-        },
+        next: () => this.favoriteMovies.push(movieId),
         error: (err) => console.error('Error adding favorite:', err),
       });
     }
   }
 
   openUserRegistrationDialog(): void {
-    this.dialog.open(UserRegistrationDialogComponent, {
-      width: '400px',
-    });
+    this.dialog.open(UserRegistrationDialogComponent, { width: '400px' });
   }
 
   openUserLoginDialog(): void {
-    this.dialog.open(UserLoginDialogComponent, {
-      width: '400px',
+    const dialogRef = this.dialog.open(UserLoginDialogComponent, { width: '400px' });
+    dialogRef.afterClosed().subscribe(() => {
+      const token = localStorage.getItem('token');
+      const user = localStorage.getItem('username');
+
+      if (token && user) {
+        this.isLoggedIn = true;
+        this.username = user;
+        this.loadMovies();
+        this.loadFavorites();
+      }
     });
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    this.isLoggedIn = false;
+    this.username = null;
+    this.movies = [];
+    this.favoriteMovies = [];
   }
 }

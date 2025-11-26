@@ -45,7 +45,7 @@ import { FetchApiDataService } from '../fetch-api-data.service';
     </mat-dialog-actions>
   `,
   imports: [
-    FormsModule, // necessario per ngModel
+    FormsModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
@@ -53,10 +53,7 @@ import { FetchApiDataService } from '../fetch-api-data.service';
   ],
 })
 export class UserLoginDialogComponent {
-  loginData = {
-    username: '',
-    password: '',
-  };
+  loginData = { username: '', password: '' };
 
   constructor(
     public dialogRef: MatDialogRef<UserLoginDialogComponent>,
@@ -71,9 +68,7 @@ export class UserLoginDialogComponent {
         localStorage.setItem('token', result.token);
         this.dialogRef.close();
       },
-      error: (error) => {
-        console.error('Login error:', error);
-      },
+      error: (error) => console.error('Login error:', error),
     });
   }
 }
