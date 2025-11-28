@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 
 const apiUrl = 'https://myflix-api-0vxe.onrender.com/';
 
-// class to fetch data from API
 @Injectable({
   providedIn: 'root',
 })
@@ -17,13 +16,11 @@ export class FetchApiDataService {
   }
 
   // User login
-  // questa API serve per ottenre il token JWT dopo che utente inserisce pwd e username
   public userLogin(userDetails: any): Observable<any> {
     return this.http.post(apiUrl + 'login', userDetails);
   }
 
   // Get all movies
-  // questa API serve per ottenere la lista di tutti i film
   public getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http.get(apiUrl + 'movies', {
@@ -68,7 +65,7 @@ export class FetchApiDataService {
   public getFavoriteMovies(): Observable<any> {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
-    return this.http.get(apiUrl + `users/${username}/movies`, {
+    return this.http.get(apiUrl + `users/${username}/favorites`, {
       headers: { Authorization: `Bearer ${token}` },
     });
   }
@@ -78,11 +75,9 @@ export class FetchApiDataService {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
     return this.http.post(
-      apiUrl + `users/${username}/movies/${movieId}`,
+      apiUrl + `users/${username}/favorites/${movieId}`,
       {},
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+      { headers: { Authorization: `Bearer ${token}` } }
     );
   }
 
@@ -90,13 +85,13 @@ export class FetchApiDataService {
   public deleteFavoriteMovie(movieId: string): Observable<any> {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
-    return this.http.delete(apiUrl + `users/${username}/movies/${movieId}`, {
-      headers: { Authorization: `Bearer ${token}` },
+    return this.http.delete(apiUrl + `users/${username}/favorites/${movieId}`, {
+      headers: { Authorization: 'Bearer ' + token },
     });
   }
 
-  // Edit user
-  public editUser(updatedUserDetails: any): Observable<any> {
+  // Update user
+  public updateUser(updatedUserDetails: any): Observable<any> {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
     return this.http.put(apiUrl + `users/${username}`, updatedUserDetails, {

@@ -1,0 +1,21 @@
+<div class="dialog-container">
+  <img class="movie-poster" [src]="data.imageUrl" alt="Movie poster" />
+
+  <h2>{{ data.title }}</h2>
+
+  <p><strong>Director:</strong> {{ data.director?.name }}</p>
+  <p><strong>Genre:</strong> {{ data.genre?.name }}</p>
+  <p><strong>Year:</strong> {{ data.year }}</p>
+
+  <p class="description">{{ data.description }}</p>
+
+  <div class="buttons">
+    <button mat-raised-button color="primary" (click)="data.onFavorite(data)">
+      Add to Favorites
+    </button>
+
+    <button mat-raised-button mat-dialog-close color="warn">
+      Close
+    </button>
+  </div>
+</div>

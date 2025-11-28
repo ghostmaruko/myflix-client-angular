@@ -1,0 +1,28 @@
+.dialog-container {
+  text-align: center;
+  padding: 20px;
+  max-width: 420px;
+}
+
+.movie-poster {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  margin: 10px 0;
+  font-size: 1.6rem;
+}
+
+.description {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}

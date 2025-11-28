@@ -1,0 +1,33 @@
+.movies-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.movie-card {
+  max-width: 240px;
+  margin: auto;
+}
+
+.movie-image {
+  height: 320px;
+  object-fit: cover;
+}
+
+mat-card-content h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+mat-card-content p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}

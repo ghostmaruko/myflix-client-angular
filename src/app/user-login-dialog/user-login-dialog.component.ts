@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { FetchApiDataService } from '../fetch-api-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-login-dialog',
@@ -57,16 +58,24 @@ export class UserLoginDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<UserLoginDialogComponent>,
-    private fetchApiData: FetchApiDataService
+    private fetchApiData: FetchApiDataService,
+    private router: Router
   ) {}
 
   loginUser(): void {
     this.fetchApiData.userLogin(this.loginData).subscribe({
       next: (result) => {
         console.log('Login successful', result);
+
+        // Salva token e username
         localStorage.setItem('username', result.user.username);
         localStorage.setItem('token', result.token);
+
+        // Chiudi dialog
         this.dialogRef.close();
+
+        // Reindirizza a /movies
+        this.router.navigate(['movies']);
       },
       error: (error) => console.error('Login error:', error),
     });

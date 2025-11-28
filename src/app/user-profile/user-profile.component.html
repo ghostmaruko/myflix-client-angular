@@ -1,0 +1,43 @@
+<div class="profile-container">
+  <mat-card>
+    <h2>Your Profile</h2>
+
+    <form>
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="user.username" name="username" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="user.email" name="email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Birthday</mat-label>
+        <input
+          matInput
+          [(ngModel)]="user.birthday"
+          name="birthday"
+          type="date"
+        />
+      </mat-form-field>
+
+      <div class="buttons">
+        <button mat-raised-button color="primary" (click)="updateUser()">
+          Update
+        </button>
+        <button mat-raised-button color="warn" (click)="deleteUser()">
+          Delete Account
+        </button>
+      </div>
+    </form>
+  </mat-card>
+
+  <mat-card>
+    <h3>Favorite Movies</h3>
+    <ul>
+      <li *ngFor="let movieId of favoriteMovies">{{ movieId }}</li>
+    </ul>
+  </mat-card>
+</div>

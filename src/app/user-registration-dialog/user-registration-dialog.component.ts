@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { FetchApiDataService } from '../fetch-api-data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-registration-dialog',
@@ -78,14 +79,24 @@ export class UserRegistrationDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<UserRegistrationDialogComponent>,
-    private fetchApiData: FetchApiDataService
+    private fetchApiData: FetchApiDataService,
+    private router: Router
   ) {}
 
   registerUser(): void {
     this.fetchApiData.userRegistration(this.userData).subscribe({
       next: (result) => {
         console.log('Registration successful', result);
+
+        // Salva token e username per login automatico
+        localStorage.setItem('username', result.username);
+        localStorage.setItem('token', result.token);
+
+        // Chiudi dialog
         this.dialogRef.close();
+
+        // Reindirizza a /movies
+        this.router.navigate(['movies']);
       },
       error: (error) => console.error('Registration error:', error),
     });
