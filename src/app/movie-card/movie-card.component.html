@@ -4,15 +4,24 @@
     *ngFor="let movie of movies"
     (click)="openMovieDetails(movie)"
   >
-    <img
-      mat-card-image
-      [src]="movie.imageURL"
-      [alt]="movie.title"
-      class="movie-image"
-    />
-    <mat-card-content>
-      <h3>{{ movie.title }}</h3>
-      <p>{{ movie.genre?.name }} • {{ movie.year }}</p>
-    </mat-card-content>
+    <img mat-card-image [src]="movie.imageURL" [alt]="movie.title" />
   </mat-card>
+</div>
+
+<!-- Overlay personalizzato -->
+<div class="overlay" *ngIf="selectedMovie">
+  <div class="movie-details">
+    <img class="movie-poster" [src]="selectedMovie.imageURL" [alt]="selectedMovie.title" />
+    <div class="movie-info">
+      <h2>{{ selectedMovie.title }}</h2>
+      <p class="year-genre">{{ selectedMovie.year }} | {{ selectedMovie.genre?.name }}</p>
+      <p class="director">Director: {{ selectedMovie.director?.name }}</p>
+      <p class="description">{{ selectedMovie.description }}</p>
+      <button mat-raised-button color="primary" (click)="selectedMovie.onFavorite(selectedMovie._id)">
+        <mat-icon>{{ selectedMovie.isFavorite(selectedMovie._id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+        {{ selectedMovie.isFavorite(selectedMovie._id) ? 'Remove from Favorites' : 'Add to Favorites' }}
+      </button>
+    </div>
+    <button class="close-btn" (click)="closeMovieDetails()">×</button>
+  </div>
 </div>

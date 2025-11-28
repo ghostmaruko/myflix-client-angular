@@ -1,13 +1,15 @@
 <div class="dialog-container">
   <img class="movie-poster" [src]="data.imageURL" [alt]="data.title" />
 
-  <h2>{{ data.title }}</h2>
-  <p class="year-genre">{{ data.year }} | {{ data.genre?.name }}</p>
-  <p class="director">Director: {{ data.director?.name }}</p>
-  <p class="description">{{ data.description }}</p>
+  <div class="movie-info">
+    <h2>{{ data.title }}</h2>
+    <p class="year-genre">{{ data.year }} | {{ data.genre?.name }}</p>
+    <p class="director">Director: {{ data.director?.name }}</p>
+    <p class="description">{{ data.description }}</p>
 
-  <button mat-raised-button color="primary" (click)="toggleFavorite()">
-    <mat-icon>{{ isFavorite() ? 'favorite' : 'favorite_border' }}</mat-icon>
-    {{ isFavorite() ? 'Remove from Favorites' : 'Add to Favorites' }}
-  </button>
+    <button mat-raised-button color="primary" (click)="toggleFavorite()">
+      <mat-icon>{{ isFavorite() ? 'favorite' : 'favorite_border' }}</mat-icon>
+      {{ isFavorite() ? 'Remove from Favorites' : 'Add to Favorites' }}
+    </button>
+  </div>
 </div>
