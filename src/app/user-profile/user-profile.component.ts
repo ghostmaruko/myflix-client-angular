@@ -75,4 +75,6 @@ export class UserProfileComponent implements OnInit {
       error: (err) => console.error(err),
     });
   }
+
+  
 }

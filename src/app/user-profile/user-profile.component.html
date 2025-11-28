@@ -1,45 +1,54 @@
 <div class="profile-container">
-  <mat-card class="profile-card">
-    <div class="profile-header">
-      <mat-icon class="avatar-icon">account_circle</mat-icon>
-      <h2>{{ userData?.username }}</h2>
-    </div>
+  <div class="profile-header">
+    <h2>My Profile</h2>
+  </div>
 
-    <form (ngSubmit)="updateUser()" class="profile-form">
-      <mat-form-field appearance="outline">
-        <mat-label>Username</mat-label>
-        <input matInput [(ngModel)]="userData.username" name="username" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="userData.email" name="email" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" [(ngModel)]="userData.password" name="password" />
-      </mat-form-field>
-
-      <button mat-raised-button color="primary" type="submit">
-        Save Changes
+  <div class="profile-body">
+    <!-- Colonna sinistra -->
+    <div class="profile-sidebar">
+      <div class="avatar">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <button mat-raised-button color="primary" (click)="updateUser()">
+        Update Profile
       </button>
-
-      <button mat-button color="warn" (click)="deleteUser()">
+      <button mat-stroked-button color="warn" (click)="deleteUser()">
         Delete Account
       </button>
-    </form>
-  </mat-card>
+    </div>
 
-  <!-- Favorite Movies Section -->
-  <h3 class="favorites-title">Your Favorite Movies</h3>
+    <!-- Colonna destra -->
+    <div class="profile-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="userData.username" />
+      </mat-form-field>
 
-  <div class="favorites-grid">
-    <mat-card class="fav-card" *ngFor="let movie of favoriteMovies">
-      <img mat-card-image [src]="movie.imageUrl" alt="{{ movie.title }}" />
-      <mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" [(ngModel)]="userData.password" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" [(ngModel)]="userData.email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Birthday</mat-label>
+        <input matInput type="date" [(ngModel)]="userData.birthday" />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Film preferiti -->
+  <div class="favorite-movies" *ngIf="favoriteMovies.length > 0">
+    <h3>Favorite Movies</h3>
+    <div class="favorites-container">
+      <div class="favorite-card" *ngFor="let movie of favoriteMovies">
+        <img [src]="movie.imageURL" [alt]="movie.title" />
         <p>{{ movie.title }}</p>
-      </mat-card-content>
-    </mat-card>
+      </div>
+    </div>
   </div>
 </div>

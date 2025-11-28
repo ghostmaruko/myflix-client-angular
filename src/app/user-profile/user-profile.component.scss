@@ -1,61 +1,43 @@
 .profile-container {
-  max-width: 600px;
+  max-width: 900px;
   margin: 40px auto;
-  padding: 0 20px;
-}
-
-.profile-card {
-  padding: 30px;
-  text-align: center;
-  border-radius: 16px;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .profile-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  margin-bottom: 24px;
 
-  .avatar-icon {
-    font-size: 80px;
-    color: #888;
+  h2 {
+    font-size: 1.8rem;
+    color: #1976d2;
   }
 }
 
 .profile-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  display: grid;
+  gap: 16px;
 
-  button {
+  mat-form-field {
     width: 100%;
   }
-}
 
-.favorites-title {
-  margin-top: 40px;
-  text-align: center;
-  font-weight: 600;
-}
-
-.favorites-grid {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 15px;
-}
-
-.fav-card {
-  padding: 0;
-
-  img {
-    height: 220px;
-    object-fit: cover;
-    border-radius: 6px 6px 0 0;
+  button {
+    margin-top: 12px;
   }
+}
 
-  p {
-    text-align: center;
-    margin: 10px 0;
+.favorite-movies {
+  margin-top: 32px;
+
+  h3 {
+    margin-bottom: 12px;
+    font-size: 1.4rem;
+    color: #333;
   }
 }

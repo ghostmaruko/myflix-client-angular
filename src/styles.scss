@@ -1,4 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+/* Font & base */
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  background-color: #f5f5f5;
+  color: #222;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Toolbar */
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Buttons default style */
+button {
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* Responsive utility */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
