@@ -1,50 +1,61 @@
 .profile-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.profile-card {
+  padding: 30px;
+  text-align: center;
+  border-radius: 16px;
+}
+
+.profile-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px;
-  gap: 20px;
+  margin-bottom: 20px;
 
-  .profile-card {
+  .avatar-icon {
+    font-size: 80px;
+    color: #888;
+  }
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  button {
     width: 100%;
-    max-width: 480px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  }
+}
+
+.favorites-title {
+  margin-top: 40px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.favorites-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 15px;
+}
+
+.fav-card {
+  padding: 0;
+
+  img {
+    height: 220px;
+    object-fit: cover;
+    border-radius: 6px 6px 0 0;
   }
 
-  mat-form-field {
-    width: 100%;
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 16px;
-  }
-
-  .favorites-card {
-    width: 100%;
-    max-width: 480px;
-    padding: 20px;
-
-    .favorites-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 12px;
-
-      img {
-        width: 100%;
-        border-radius: 8px;
-        object-fit: cover;
-        cursor: pointer;
-        transition: transform 0.2s;
-      }
-
-      img:hover {
-        transform: scale(1.05);
-      }
-    }
+  p {
+    text-align: center;
+    margin: 10px 0;
   }
 }
