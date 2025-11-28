@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { MovieDetailsDialogComponent } from '../movie-details-dialog/movie-details-dialog.component';
 
 import { FetchApiDataService } from '../fetch-api-data.service';
 
@@ -18,7 +20,10 @@ export class MovieCardComponent implements OnInit {
   favoriteMovies: string[] = [];
   username: string | null = null;
 
-  constructor(private fetchApiData: FetchApiDataService) {}
+  constructor(
+    private fetchApiData: FetchApiDataService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.username = localStorage.getItem('username');
@@ -29,9 +34,7 @@ export class MovieCardComponent implements OnInit {
   /** CARICA TUTTI I FILM DAL BACKEND */
   loadMovies(): void {
     this.fetchApiData.getAllMovies().subscribe({
-      next: (movies) => {
-        this.movies = movies;
-      },
+      next: (movies) => (this.movies = movies),
       error: (err) => console.error('Errore nel caricamento dei film:', err),
     });
   }
@@ -39,9 +42,7 @@ export class MovieCardComponent implements OnInit {
   /** CARICA I PREFERITI DELL'UTENTE */
   loadFavorites(): void {
     this.fetchApiData.getFavoriteMovies().subscribe({
-      next: (resp) => {
-        this.favoriteMovies = resp.favoriteMovies || [];
-      },
+      next: (resp) => (this.favoriteMovies = resp.favoriteMovies || []),
       error: (err) =>
         console.error('Errore nel caricamento dei preferiti:', err),
     });
@@ -70,12 +71,23 @@ export class MovieCardComponent implements OnInit {
 
   private removeFavorite(movieId: string): void {
     this.fetchApiData.deleteFavoriteMovie(movieId).subscribe({
-      next: () => {
-        this.favoriteMovies = this.favoriteMovies.filter(
+      next: () =>
+        (this.favoriteMovies = this.favoriteMovies.filter(
           (id) => id !== movieId
-        );
-      },
+        )),
       error: (err) => console.error('Errore rimozione preferito:', err),
+    });
+  }
+
+  /** APRE MODALE DETTAGLI FILM */
+  openMovieDetails(movie: any): void {
+    this.dialog.open(MovieDetailsDialogComponent, {
+      data: {
+        ...movie,
+        isFavorite: this.isFavorite.bind(this),
+        onFavorite: this.toggleFavorite.bind(this),
+      },
+      width: '450px',
     });
   }
 }

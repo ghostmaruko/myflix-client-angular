@@ -1,15 +1,24 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-movie-details-dialog',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule],
+  imports: [CommonModule, MatDialogModule, MatButtonModule, MatIconModule],
   templateUrl: './movie-details-dialog.component.html',
   styleUrls: ['./movie-details-dialog.component.scss'],
 })
 export class MovieDetailsDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+
+  toggleFavorite(): void {
+    this.data.onFavorite(this.data._id);
+  }
+
+  isFavorite(): boolean {
+    return this.data.isFavorite(this.data._id);
+  }
 }
