@@ -1,43 +1,63 @@
 <div class="profile-container">
-  <mat-card>
-    <h2>Your Profile</h2>
+  <mat-card class="profile-card">
+    <h2>My Profile</h2>
 
     <form>
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="fill">
         <mat-label>Username</mat-label>
-        <input matInput [(ngModel)]="user.username" name="username" />
+        <input matInput [(ngModel)]="userData.username" name="username" />
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="user.email" name="email" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Birthday</mat-label>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
         <input
           matInput
-          [(ngModel)]="user.birthday"
-          name="birthday"
-          type="date"
+          type="password"
+          [(ngModel)]="userData.password"
+          name="password"
         />
       </mat-form-field>
 
-      <div class="buttons">
-        <button mat-raised-button color="primary" (click)="updateUser()">
-          Update
-        </button>
-        <button mat-raised-button color="warn" (click)="deleteUser()">
-          Delete Account
-        </button>
-      </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          [(ngModel)]="userData.email"
+          name="email"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Birthday</mat-label>
+        <input
+          matInput
+          type="date"
+          [(ngModel)]="userData.birthday"
+          name="birthday"
+        />
+      </mat-form-field>
     </form>
+
+    <div class="buttons">
+      <button mat-raised-button color="primary" (click)="updateUser()">
+        Update Profile
+      </button>
+      <button mat-raised-button color="warn" (click)="deleteUser()">
+        Delete Account
+      </button>
+    </div>
   </mat-card>
 
-  <mat-card>
+  <mat-card class="favorites-card" *ngIf="favoriteMovies.length > 0">
     <h3>Favorite Movies</h3>
-    <ul>
-      <li *ngFor="let movieId of favoriteMovies">{{ movieId }}</li>
-    </ul>
+    <div class="favorites-grid">
+      <img
+        *ngFor="let movie of favoriteMovies"
+        [src]="movie.imageURL"
+        [alt]="movie.title"
+        (click)="openMovieDetails(movie)"
+      />
+    </div>
   </mat-card>
 </div>
