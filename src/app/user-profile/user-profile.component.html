@@ -46,8 +46,10 @@
     <h3>Favorite Movies</h3>
     <div class="favorites-container">
       <div class="favorite-card" *ngFor="let movie of favoriteMovies">
-        <img [src]="movie.imageURL" [alt]="movie.title" />
-        <p>{{ movie.title }}</p>
+        <!-- <img [src]="movie.imageURL" [alt]="movie.title" />
+        <p>{{ movie.title }}</p> -->
+        <img [src]="movie.ImagePath" [alt]="movie.Title" />
+        <p>{{ movie.Title }}</p>
       </div>
     </div>
   </div>

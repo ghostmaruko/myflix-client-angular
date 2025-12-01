@@ -16,7 +16,7 @@ export class MovieCardComponent implements OnInit {
   movies: any[] = [];
   favoriteMovies: string[] = [];
   username: string | null = null;
-  
+
   selectedMovie: any = null; // per overlay
 
   constructor(private fetchApiData: FetchApiDataService) {}
@@ -29,15 +29,19 @@ export class MovieCardComponent implements OnInit {
 
   loadMovies(): void {
     this.fetchApiData.getAllMovies().subscribe({
-      next: (movies) => (this.movies = movies),
-      error: (err) => console.error('Errore nel caricamento dei film:', err),
+      next: (movies: any[]) => (this.movies = movies),
+      error: (err: any) =>
+        console.error('Errore nel caricamento dei film:', err),
     });
   }
 
   loadFavorites(): void {
-    this.fetchApiData.getFavoriteMovies().subscribe({
-      next: (resp) => (this.favoriteMovies = resp.favoriteMovies || []),
-      error: (err) => console.error('Errore nel caricamento dei preferiti:', err),
+    this.fetchApiData.getUser().subscribe({
+      next: (user: any) => {
+        this.favoriteMovies = user.FavoriteMovies || [];
+      },
+      error: (err: any) =>
+        console.error('Errore nel caricamento dei preferiti:', err),
     });
   }
 
@@ -47,12 +51,18 @@ export class MovieCardComponent implements OnInit {
 
   toggleFavorite(movieId: string): void {
     if (this.isFavorite(movieId)) {
-      this.fetchApiData.deleteFavoriteMovie(movieId).subscribe(() => {
-        this.favoriteMovies = this.favoriteMovies.filter((id) => id !== movieId);
+      this.fetchApiData.deleteFavoriteMovie(movieId).subscribe({
+        next: () => {
+          this.favoriteMovies = this.favoriteMovies.filter(
+            (id) => id !== movieId
+          );
+        },
       });
     } else {
-      this.fetchApiData.addFavoriteMovie(movieId).subscribe(() => {
-        this.favoriteMovies.push(movieId);
+      this.fetchApiData.addFavoriteMovie(movieId).subscribe({
+        next: () => {
+          this.favoriteMovies.push(movieId);
+        },
       });
     }
   }

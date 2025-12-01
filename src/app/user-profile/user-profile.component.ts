@@ -29,6 +29,7 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 export class UserProfileComponent implements OnInit {
   userData: any = {};
   favoriteMovies: any[] = [];
+  allMovies: any[] = [];
 
   constructor(
     private fetchApiData: FetchApiDataService,
@@ -37,19 +38,28 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUser();
-    this.loadFavorites();
   }
 
   loadUser(): void {
     this.fetchApiData.getUser().subscribe({
-      next: (user) => (this.userData = user),
+      next: (user) => {
+        this.userData = user;
+        this.loadAllMovies();
+      },
       error: (err) => console.error(err),
     });
   }
 
-  loadFavorites(): void {
-    this.fetchApiData.getFavoriteMovies().subscribe({
-      next: (resp) => (this.favoriteMovies = resp || []),
+  loadAllMovies(): void {
+    this.fetchApiData.getAllMovies().subscribe({
+      next: (movies) => {
+        this.allMovies = movies;
+
+        // FILTRIAMO I PREFERITI DALLA LISTA COMPLETA
+        this.favoriteMovies = this.allMovies.filter((m) =>
+          this.userData.FavoriteMovies.includes(m._id)
+        );
+      },
       error: (err) => console.error(err),
     });
   }
@@ -75,6 +85,4 @@ export class UserProfileComponent implements OnInit {
       error: (err) => console.error(err),
     });
   }
-
-  
 }
