@@ -91,24 +91,12 @@ Make sure your myFlix API backend is running and configured properly.
 
 --------- 
 
-### Project Structure
-
-src/app/
-  components/
-  services/
-  dialogs/
-  models/
-docs/              ← TypeDoc output
-typedoc.json       ← TypeDoc config
-
---------- 
-
 ### Authentication
 
 The app uses JWT (JSON Web Tokens).
 On successful login or registration, the API returns:
-token
-username
+- token
+- username
 These are stored in localStorage and automatically applied to authenticated requests.
 The UserAuthService uses an RxJS BehaviorSubject to track login state across components.
 
