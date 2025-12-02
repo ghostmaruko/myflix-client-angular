@@ -7,6 +7,12 @@ import { FormsModule } from '@angular/forms';
 import { FetchApiDataService } from '../fetch-api-data.service';
 import { Router } from '@angular/router';
 
+/**
+ * UserRegistrationDialogComponent — dialog per registrazione nuovi utenti.
+ * Gestisce username, password, email, birthday, chiusura dialog e redirect.
+ *
+ * @component
+ */
 @Component({
   selector: 'app-user-registration-dialog',
   standalone: true,
@@ -74,6 +80,7 @@ import { Router } from '@angular/router';
     MatButtonModule,
   ],
 })
+/** Dati dell’utente da registrare. */
 export class UserRegistrationDialogComponent {
   userData = { username: '', password: '', email: '', birthday: '' };
 
@@ -83,6 +90,7 @@ export class UserRegistrationDialogComponent {
     private router: Router
   ) {}
 
+  /** Esegue la registrazione tramite API e salva token e username. */
   registerUser(): void {
     this.fetchApiData.userRegistration(this.userData).subscribe({
       next: (result) => {

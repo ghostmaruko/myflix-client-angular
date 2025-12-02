@@ -11,6 +11,12 @@ import { MatInputModule } from '@angular/material/input';
 
 import { FetchApiDataService } from '../fetch-api-data.service';
 
+/**
+ * UserProfileComponent — visualizza e gestisce il profilo utente,
+ * inclusi aggiornamenti dati e lista film preferiti.
+ *
+ * @component
+ */
 @Component({
   selector: 'app-user-profile',
   standalone: true,
@@ -27,8 +33,11 @@ import { FetchApiDataService } from '../fetch-api-data.service';
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
+  /** Dati dell’utente loggato. */
   userData: any = {};
+  /** Lista dei film preferiti dell’utente. */
   favoriteMovies: any[] = [];
+  /** Lista completa di tutti i film. */
   allMovies: any[] = [];
 
   constructor(
@@ -36,10 +45,12 @@ export class UserProfileComponent implements OnInit {
     private router: Router
   ) {}
 
+  /** Inizializza il componente caricando dati utente e film. */
   ngOnInit(): void {
     this.loadUser();
   }
 
+  /** Carica dati utente dal backend. */
   loadUser(): void {
     this.fetchApiData.getUser().subscribe({
       next: (user) => {
@@ -50,6 +61,7 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /** Carica tutti i film dal backend e filtra quelli preferiti. */
   loadAllMovies(): void {
     this.fetchApiData.getAllMovies().subscribe({
       next: (movies) => {
@@ -64,6 +76,7 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /** Aggiorna i dati dell’utente. */
   updateUser(): void {
     this.fetchApiData.updateUser(this.userData).subscribe({
       next: (result) => {
@@ -74,6 +87,7 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /** Elimina l’utente dopo conferma. */
   deleteUser(): void {
     if (!confirm('Are you sure?')) return;
 
