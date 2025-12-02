@@ -4,6 +4,8 @@ A modern, responsive Angular application for browsing movies, managing user prof
 
 This project is part of the CareerFoundry Full-Stack Web Development Program and represents the Angular version of the myFlix client-side application.
 
+--------- 
+
 ### Overview
 
 The myFlix Angular Client allows users to:
@@ -16,6 +18,8 @@ Update or delete their profile
 Enjoy a sleek UI built with Angular Material
 This project also includes full TypeDoc-generated documentation.
 
+--------- 
+
 ### Built With
 
 - Angular 19
@@ -26,13 +30,16 @@ This project also includes full TypeDoc-generated documentation.
 - myFlix REST API (Node.js + MongoDB)
 - TypeDoc for documentation
 
-### Features
-### Movie Features
+--------- 
+
+### Features & Movie Features
 
 - View all movies
 - See detailed movie information in dialogs
 - Mark/unmark favorite movies
 - Persistent favorites per user (via API)
+
+--------- 
 
 ### User Features
 
@@ -43,11 +50,15 @@ Update user data
 Delete account
 Logout system with BehaviorSubject tracking
 
+--------- 
+
 ### UI/UX
 
 Fully responsive design
 Angular Material components
 Dialog-based interfaces (Login / Registration / Movie Details)
+
+--------- 
 
 ### Documentation
 
@@ -58,16 +69,18 @@ Automatically generated via:
 You can regenerate it anytime using:
     npm run docs
 
+--------- 
+
 ### Installation & Setup
 
-### 1Clone the repository
+### 1 Clone the repository
 - git clone https://github.com/ghostmaruko/myflix-client-angular.git
 - cd myflix-client-angular
 
-### 2Install dependencies
+### 2 Install dependencies
 - npm install
 
-### 3Run the development server
+### 3 Run the development server
 - npm start
 
 
@@ -75,6 +88,8 @@ Then visit:
 http://localhost:4200
 
 Make sure your myFlix API backend is running and configured properly.
+
+--------- 
 
 ### Project Structure
 
@@ -86,6 +101,8 @@ src/app/
 docs/              ← TypeDoc output
 typedoc.json       ← TypeDoc config
 
+--------- 
+
 ### Authentication
 
 The app uses JWT (JSON Web Tokens).
@@ -94,6 +111,8 @@ token
 username
 These are stored in localStorage and automatically applied to authenticated requests.
 The UserAuthService uses an RxJS BehaviorSubject to track login state across components.
+
+--------- 
 
 ### Roadmap
 
@@ -114,6 +133,8 @@ Angular Client repository:
 
 Documentation (TypeDoc):
 - /docs folder inside the repository
+
+--------- 
 
 ### License
 
