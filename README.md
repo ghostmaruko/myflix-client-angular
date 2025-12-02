@@ -97,13 +97,12 @@ The UserAuthService uses an RxJS BehaviorSubject to track login state across com
 
 ### Roadmap
 
-Refactor movie details UI
+- Refactor movie details UI
+- Improve profile view design
+- Add route guards (optional enhancement)
+- Add "Similar Movies" module
 
-Improve profile view design
-
-Add route guards (optional enhancement)
-
-Add "Similar Movies" module
+--------- 
 
 ### Links
 
