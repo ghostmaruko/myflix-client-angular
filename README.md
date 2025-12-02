@@ -1,59 +1,122 @@
-# MyFlixAngularClient
+🎬 myFlix Angular Client
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+A modern, responsive Angular application for browsing movies, managing user profiles, and interacting with the myFlix API.
 
-## Development server
+This project is part of the CareerFoundry Full-Stack Web Development Program and represents the Angular version of the myFlix client-side application.
 
-To start a local development server, run:
+🚀 Overview
 
-```bash
-ng serve
-```
+The myFlix Angular Client allows users to:
+Browse a list of movies retrieved from the myFlix REST API
+View detailed information about each movie (genre, director, description)
+Register a new account
+Log in and receive a JWT for authentication
+Add and remove movies from their list of favorites
+Update or delete their profile
+Enjoy a sleek UI built with Angular Material
+This project also includes full TypeDoc-generated documentation.
+---------------------------------------
+🛠 Built With
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Angular 19
+Angular Material
+TypeScript
+RxJS
+Angular Router
+myFlix REST API (Node.js + MongoDB)
+TypeDoc for documentation
+---------------------------------------
+📦 Features
+🎥 Movie Features
 
-## Code scaffolding
+View all movies
+See detailed movie information in dialogs
+Mark/unmark favorite movies
+Persistent favorites per user (via API)
+---------------------------------------
+👤 User Features
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Register a new account
+Log in with JWT authentication
+Automatic login after registration
+Update user data
+Delete account
+Logout system with BehaviorSubject tracking
+---------------------------------------
+🎨 UI/UX
 
-```bash
-ng generate component component-name
-```
+Fully responsive design
+Angular Material components
+Dialog-based interfaces (Login / Registration / Movie Details)
+---------------------------------------
+📄 Documentation
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Full TypeDoc documentation included in /docs
 
-```bash
-ng generate --help
-```
+Automatically generated via:
+    npm run docs
+You can regenerate it anytime using:
+    npm run docs
+---------------------------------------
+    🔧 Installation & Setup
 
-## Building
+1️⃣ Clone the repository
+    git clone https://github.com/ghostmaruko/myflix-client-angular.git
+    cd myflix-client-angular
 
-To build the project run:
+2️⃣ Install dependencies
+    npm install
 
-```bash
-ng build
-```
+3️⃣ Run the development server
+npm start
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
+Then visit:
+    http://localhost:4200
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Make sure your myFlix API backend is running and configured properly.
+---------------------------------------
+📁 Project Structure
 
-```bash
-ng test
-```
+src/app/
+  components/
+  services/
+  dialogs/
+  models/
+docs/              ← TypeDoc output
+typedoc.json       ← TypeDoc config
+---------------------------------------
+🔐 Authentication
 
-## Running end-to-end tests
+The app uses JWT (JSON Web Tokens).
+On successful login or registration, the API returns:
+token
+username
+These are stored in localStorage and automatically applied to authenticated requests.
+The UserAuthService uses an RxJS BehaviorSubject to track login state across components.
+---------------------------------------
+📝 Roadmap
 
-For end-to-end (e2e) testing, run:
+Refactor movie details UI
 
-```bash
-ng e2e
-```
+Improve profile view design
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Add route guards (optional enhancement)
 
-## Additional Resources
+Add "Similar Movies" module
+---------------------------------------
+📎 Links
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+myFlix API repository:
+    https://github.com/ghostmaruko/myflix-api
+
+Angular Client repository:
+    https://github.com/ghostmaruko/myflix-client-angular
+
+Documentation (TypeDoc):
+    /docs folder inside the repository
+---------------------------------------
+📄 License
+
+This project is part of the CareerFoundry Full-Stack Web Development Program.
+Feel free to use it for learning or portfolio purposes.
