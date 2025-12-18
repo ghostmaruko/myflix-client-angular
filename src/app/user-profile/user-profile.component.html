@@ -5,16 +5,28 @@
 
   <div class="profile-body">
     <!-- Colonna sinistra -->
+    <!-- Colonna sinistra -->
     <div class="profile-sidebar">
-      <div class="avatar">
-        <mat-icon>account_circle</mat-icon>
+      <div class="avatar-container">
+        <img
+          *ngIf="userData.imagePath; else defaultAvatar"
+          [src]="userData.imagePath"
+          alt="User Avatar"
+          class="avatar-img"
+        />
+        <ng-template #defaultAvatar>
+          <img src="assets/profile.png" class="avatar-img" />
+        </ng-template>
       </div>
-      <button mat-raised-button color="primary" (click)="updateUser()">
-        Update Profile
-      </button>
-      <button mat-stroked-button color="warn" (click)="deleteUser()">
-        Delete Account
-      </button>
+
+      <div class="profile-buttons">
+        <button mat-raised-button color="primary" (click)="updateUser()">
+          Update Profile
+        </button>
+        <button mat-stroked-button color="warn" (click)="deleteUser()">
+          Delete Account
+        </button>
+      </div>
     </div>
 
     <!-- Colonna destra -->
