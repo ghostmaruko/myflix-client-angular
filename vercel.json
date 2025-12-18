@@ -1,0 +1,11 @@
+{
+  "buildCommand": "ng build --configuration production",
+  "outputDirectory": "dist/my-flix-angular-client",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
