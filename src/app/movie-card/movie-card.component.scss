@@ -38,20 +38,20 @@
 
 .movie-details {
   display: flex;
+  flex-direction: row; // affianca poster e info
   width: 90vw;
   max-width: 960px;
-  aspect-ratio: 16 / 9;
+  max-height: 90vh; // non oltre viewport
   background: #fff;
   border-radius: 12px;
-  overflow: hidden;
+  overflow: auto; // permette scroll verticale se serve
   position: relative;
 }
 
 .movie-poster {
-  height: 100%;
-  width: auto;
-  object-fit: contain;
-  border-radius: 0;
+  max-width: 40%; // lascia spazio per le info
+  height: auto;
+  object-fit: cover;
 }
 
 .movie-info {
@@ -60,6 +60,7 @@
   flex-direction: column;
   justify-content: flex-start;
   padding: 20px;
+  overflow-y: auto; // scroll solo per il testo lungo
 }
 
 .movie-info h2 {
@@ -84,4 +85,20 @@
   border: none;
   cursor: pointer;
   color: #222;
+}
+
+@media (max-width: 768px) {
+  .movie-details {
+    flex-direction: column; // poster sopra, info sotto
+    width: 95vw;
+  }
+
+  .movie-poster {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .movie-info button {
+    width: 100%;
+  }
 }

@@ -58,10 +58,20 @@
     <h3>Favorite Movies</h3>
     <div class="favorites-container">
       <div class="favorite-card" *ngFor="let movie of favoriteMovies">
-        <!-- <img [src]="movie.imageURL" [alt]="movie.title" />
-        <p>{{ movie.title }}</p> -->
-        <img [src]="movie.ImagePath" [alt]="movie.Title" />
-        <p>{{ movie.Title }}</p>
+        <img [src]="movie.imageURL" [alt]="movie.title" />
+
+        <div class="favorite-info">
+          <p>{{ movie.title }}</p>
+
+          <!-- Cuore cliccabile per rimuovere dai preferiti -->
+          <mat-icon
+            class="favorite-icon"
+            (click)="removeFromFavorites(movie._id)"
+            style="color: red; cursor: pointer"
+          >
+            favorite
+          </mat-icon>
+        </div>
       </div>
     </div>
   </div>

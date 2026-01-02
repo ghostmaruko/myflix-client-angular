@@ -64,13 +64,88 @@ export class UserProfileComponent implements OnInit {
   /** Carica tutti i film dal backend e filtra quelli preferiti. */
   loadAllMovies(): void {
     this.fetchApiData.getAllMovies().subscribe({
-      next: (movies) => {
+      next: (movies: any[]) => {
         this.allMovies = movies;
+
+        if (!this.userData.favoriteMovies) {
+          this.favoriteMovies = [];
+          return;
+        }
 
         // FILTRIAMO I PREFERITI DALLA LISTA COMPLETA
         this.favoriteMovies = this.allMovies.filter((m) =>
-          this.userData.FavoriteMovies.includes(m._id)
+          this.userData.favoriteMovies.includes(m._id)
         );
+      },
+      error: (err) => console.error(err),
+    });
+  }
+
+  /** Rimuoviamo i film preferiti con il <3. */
+  removeFavorite(movieId: string): void {
+    this.fetchApiData.deleteFavoriteMovie(movieId).subscribe({
+      next: () => {
+        // aggiorniamo lista ID
+        this.userData.favoriteMovies = this.userData.favoriteMovies.filter(
+          (id: string) => id !== movieId
+        );
+
+        // aggiorniamo lista film renderizzati
+        this.favoriteMovies = this.favoriteMovies.filter(
+          (movie) => movie._id !== movieId
+        );
+      },
+      error: (err) => console.error(err),
+    });
+  }
+
+  /** Controlla se il film è tra i preferiti dell’utente */
+  isFavorite(movieId: string): boolean {
+    return this.userData.FavoriteMovies?.includes(movieId);
+  }
+
+  /** Aggiunge o rimuove un film dai preferiti */
+  toggleFavorite(movieId: string): void {
+    if (!this.userData.FavoriteMovies) {
+      this.userData.FavoriteMovies = [];
+    }
+
+    if (this.isFavorite(movieId)) {
+      // Rimuovi dai preferiti
+      this.fetchApiData.deleteFavoriteMovie(movieId).subscribe({
+        next: () => {
+          this.userData.FavoriteMovies = this.userData.FavoriteMovies.filter(
+            (id: string) => id !== movieId
+          );
+        },
+        error: (err) => console.error(err),
+      });
+    } else {
+      // Aggiungi ai preferiti
+      this.fetchApiData.addFavoriteMovie(movieId).subscribe({
+        next: () => {
+          this.userData.FavoriteMovies.push(movieId);
+        },
+        error: (err) => console.error(err),
+      });
+    }
+  }
+
+  /** Rimuove un film dai preferiti e aggiorna la lista */
+  removeFromFavorites(movieId: string): void {
+    this.fetchApiData.deleteFavoriteMovie(movieId).subscribe({
+      next: () => {
+        // Aggiorna la lista favoriteMovies filtrando direttamente l'array usato dal template
+        this.favoriteMovies = this.favoriteMovies.filter(
+          (movie) => movie._id !== movieId
+        );
+
+        // Aggiorna anche userData.FavoriteMovies se serve
+        if (this.userData.FavoriteMovies) {
+          this.userData.FavoriteMovies = this.userData.FavoriteMovies.filter(
+            (id: string) => id !== movieId
+          );
+        }
       },
       error: (err) => console.error(err),
     });

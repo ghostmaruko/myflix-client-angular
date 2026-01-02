@@ -46,7 +46,6 @@
   object-fit: cover;
   background-color: rgb(255, 255, 255);
   border: 5px solid #1976d2;
-  
 }
 
 .profile-buttons {
@@ -90,6 +89,7 @@ button {
   }
 
   .favorite-card {
+    position: relative;
     width: 120px;
     text-align: center;
 
@@ -103,8 +103,21 @@ button {
       font-size: 0.9rem;
       color: #555;
     }
+
+    button {
+      position: absolute;
+      
+      top: 8px;
+      right: 8px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    &:hover button {
+      opacity: 1;
+    }
   }
 }
+
 @media (max-width: 768px) {
   .profile-body {
     flex-direction: column;
